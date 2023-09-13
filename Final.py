@@ -43,7 +43,7 @@ def preprocess_data(data):
     if data.isnull().any().any():
         raise ValueError("The data contains missing values. Please ensure the data is cleaned before processing.")
 
-    X = data.drop(['Client Name', 'Client e-mail', 'Profession', 'Education', 'Country', 'Gender', 'Age', 'Income', 'Credit Card Debt', 'Healthcare Cost', 'REITs', 'Net Worth'], axis=1)
+    X = data.drop(['Client Name', 'Client e-mail', 'Profession', 'Education', 'Country', 'Healthcare Cost', 'Net Worth'], axis=1)
     Y = data['Net Worth']
     
     sc = MinMaxScaler()
@@ -113,16 +113,6 @@ def save_best_model(models, rmse_values):
 def load_best_model():
     return load("Net_Worth.joblib")
 
-def retrain_model(new_data, X_train, y_train):
-    # Add the new data to the existing training data
-    X_train = np.vstack((X_train, new_data[:, :-1]))
-    y_train = np.vstack((y_train, new_data[:, -1].reshape(-1, 1)))
-
-    # Retrain the models with the updated training data
-    models = train_models(X_train, y_train)
-
-    return models
-
 def gather_user_inputs():
     Inherited = int(input("Enter inherited amount: "))
     Stocks = int(input("Enter stock value: "))
@@ -163,9 +153,6 @@ if __name__ == "__main__":
         
         # Load the best model
         loaded_model = load_best_model()
-        
-        #Retrain models
-        retrain_models = retrain_model
 
         # Gather user inputs
         user_inputs = gather_user_inputs()
