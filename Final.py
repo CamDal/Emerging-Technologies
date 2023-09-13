@@ -45,6 +45,7 @@ def preprocess_data(data):
 
     X = data.drop(['Client Name', 'Client e-mail', 'Profession', 'Education', 'Country', 'Healthcare Cost', 'Net Worth'], axis=1)
     Y = data['Net Worth']
+
     
     sc = MinMaxScaler()
     X_scaled = sc.fit_transform(X)
@@ -114,13 +115,19 @@ def load_best_model():
     return load("Net_Worth.joblib")
 
 def gather_user_inputs():
+    Age = int(input("Enter Age: "))
+    Gender = int(input("Enter Gender (0 for female 1 for male): "))
+    Income = int(input("Enter Income: "))
+    Credit = int(input("Enter Credit Card Debt: "))
     Inherited = int(input("Enter inherited amount: "))
     Stocks = int(input("Enter stock value: "))
     Bonds = float(input("Enter bonds amount: "))
     Mutual_Funds = float(input("Enter mutual funds: "))
     ETFs = float(input("Enter ETFs value: "))
+    REITs = float(input("Enter REITs value: "))
     
-    return Inherited, Stocks, Bonds, Mutual_Funds, ETFs
+    return Age, Gender, Income, Credit, Inherited, Stocks, Bonds, Mutual_Funds, ETFs, REITs
+
 
 def scale_user_inputs(user_inputs, sc):
     with warnings.catch_warnings():
